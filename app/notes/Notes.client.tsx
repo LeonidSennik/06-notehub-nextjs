@@ -27,6 +27,7 @@ export default function NotesClient() {
     queryKey: ['notes', page, debouncedSearch],
     queryFn: () => fetchNotes(page, debouncedSearch),
     staleTime: 1000 * 60,
+    refetchOnMount: false, 
     placeholderData: (prevData) => prevData,
   });
 
@@ -50,6 +51,7 @@ export default function NotesClient() {
         </button>
       </header>
 
+      {isLoading && <p>Loading notes...</p>}
       {!isLoading && notes.length > 0 && <NoteList notes={notes} />}
       {!isLoading && notes.length === 0 && <p>No notes found.</p>}
       {isError && <p>{error instanceof Error ? error.message : 'Error loading notes.'}</p>}
